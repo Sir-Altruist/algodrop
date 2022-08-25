@@ -3,7 +3,7 @@ import WalletConnect from '@walletconnect/client';
 import QRCodeModal from 'algorand-walletconnect-qrcode-modal';
 import algosdk from 'algosdk';
 import { KEYS } from '../../helpers/keys';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 
 const WalletConnectComp = () => {
   const [connector, setConnector] = useState(null);
@@ -176,32 +176,54 @@ const WalletConnectComp = () => {
     resetApp();
   };
   return (
-    // <>
-    <div>
-      <Typography variant='h5' component={'h5'}>
-        WalletConnect
-      </Typography>
-      <div style={{ marginTop: '1rem' }}>
-        {connector && !loading ? (
-          <div>
-            <Box component={'div'}>
-              <strong>Connected Account: {account}</strong>
-              <br />
-              <strong>Chain ID: {chainId}</strong>
-              <br />
-              {/* <strong>Amount: {reach.formatCurrency(amount, 4)}</strong> */}
-              <strong>Amount: {algosdk.microalgosToAlgos(amount)}</strong>
-            </Box>
-            <Box component={'div'} sx={{ mt: 2 }}>
-              <Button
-                variant='outlined'
-                color='error'
-                sx={{ textTransform: 'inherit', mr: 3 }}
-                onClick={disconnect}
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <Container>
+        <Typography variant='h5' component={'h5'}>
+          WalletConnect
+        </Typography>
+        <div style={{ marginTop: '1rem' }}>
+          {connector && !loading ? (
+            <div>
+              <Box
+                component={'div'}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                }}
+                // className='top'
               >
-                Disconnect
-              </Button>
-              {/* <Button
+                <strong style={{ textAlign: 'center' }}>
+                  Address: <small>{account}</small>
+                </strong>
+                <br />
+                <strong style={{ textAlign: 'center' }}>
+                  ID: <small>{chainId}</small>
+                </strong>
+                <br />
+                {/* <strong>Amount: {reach.formatCurrency(amount, 4)}</strong> */}
+                <strong style={{ textAlign: 'center' }}>
+                  Amount: <small>{algosdk.microalgosToAlgos(amount)}</small>
+                </strong>
+              </Box>
+              <Box
+                component={'div'}
+                sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}
+              >
+                <Button
+                  variant='outlined'
+                  color='error'
+                  sx={{ textTransform: 'inherit', mr: 3 }}
+                  onClick={disconnect}
+                >
+                  Disconnect
+                </Button>
+                {/* <Button
                 variant='contained'
                 color='primary'
                 sx={{ textTransform: 'inherit' }}
@@ -209,15 +231,15 @@ const WalletConnectComp = () => {
               >
                 Get Balance
               </Button> */}
-              <Button
-                variant='contained'
-                color='info'
-                sx={{ textTransform: 'inherit' }}
-                onClick={claimAirdrop}
-              >
-                Claim airdrop
-              </Button>
-              {/* <Button
+                <Button
+                  variant='contained'
+                  color='info'
+                  sx={{ textTransform: 'inherit' }}
+                  onClick={claimAirdrop}
+                >
+                  Claim airdrop
+                </Button>
+                {/* <Button
                 variant='contained'
                 color='info'
                 sx={{ textTransform: 'inherit' }}
@@ -225,21 +247,21 @@ const WalletConnectComp = () => {
               >
                 Opt In
               </Button> */}
-            </Box>
-          </div>
-        ) : (
-          <Button
-            variant='contained'
-            color='primary'
-            sx={{ textTransform: 'inherit' }}
-            onClick={connect}
-          >
-            Connect Wallet
-          </Button>
-        )}
-      </div>
+              </Box>
+            </div>
+          ) : (
+            <Button
+              variant='contained'
+              color='primary'
+              sx={{ textTransform: 'inherit' }}
+              onClick={connect}
+            >
+              Connect Wallet
+            </Button>
+          )}
+        </div>
+      </Container>
     </div>
-    // </>
   );
 };
 

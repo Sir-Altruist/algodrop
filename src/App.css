@@ -10,3 +10,13 @@
   align-items: center;
   padding-top: 10rem;
 }
+@media only screen and (max-width: 600px) {
+  .top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .text {
+    text-align: center;
+  }
+}
