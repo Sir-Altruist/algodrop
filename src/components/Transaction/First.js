@@ -176,8 +176,7 @@ const First = () => {
   };
 
   const optInToAsset = async () => {
-    let assetID = prompt("Enter Asset Id");
-    let newID = Number(assetID);
+    let assetId = 95944269;
     // First update changing transaction parameters
     // We will account for changing transaction parameters
     // before every transaction in this example
@@ -204,7 +203,7 @@ const First = () => {
       revocationTarget,
       amount,
       note,
-      newID,
+      assetId,
       params
     );
 
@@ -235,7 +234,7 @@ const First = () => {
     await printAssetHolding(
       algodClient,
       algosdk.mnemonicToSecretKey(info.passphrase3).addr,
-      newID
+      assetId
     );
   };
 
@@ -312,6 +311,11 @@ const First = () => {
       assetID
     );
   };
+
+  const test = () => {
+    let user = algosdk.mnemonicToSecretKey(info.passphrase1);
+    console.log(user);
+  };
   return (
     <div>
       <Typography variant="h5">Create Account</Typography>
@@ -334,6 +338,9 @@ const First = () => {
       </Button>
       <Button variant="contained" color="primary" onClick={destroy}>
         Destroy
+      </Button>
+      <Button variant="contained" color="secondary" onClick={test}>
+        Test
       </Button>
     </div>
   );
