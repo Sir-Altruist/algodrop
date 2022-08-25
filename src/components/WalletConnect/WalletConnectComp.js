@@ -4,11 +4,6 @@ import QRCodeModal from 'algorand-walletconnect-qrcode-modal';
 import algosdk from 'algosdk';
 import { KEYS } from '../../helpers/keys';
 import { Box, Button, Typography } from '@mui/material';
-import { formatJsonRpcRequest } from '@json-rpc-tools/utils';
-import axios from 'axios';
-// import { Buffer } from 'buffer';
-
-// const reach = loadStdlib("ALGO")
 
 const WalletConnectComp = () => {
   const [connector, setConnector] = useState(null);
@@ -99,22 +94,22 @@ const WalletConnectComp = () => {
   };
 
   //A function that checks user's wallet balance
-  const walletBalance = async () => {
-    let params = await algodClient.accountInformation(account).do();
-    setAmount(params.amount);
-    console.log(params);
-    // const assetId = 95944269;
-    let csaToken;
-    for (let i = 0; i < params.assets.length; i++) {
-      if (params.assets[i]['asset-id'] === 55131493) {
-        csaToken = params.assets[i].amount;
-        break;
-      } else {
-        alert('Token is not found!');
-      }
-    }
-    console.log(csaToken);
-  };
+  // const walletBalance = async () => {
+  //   let params = await algodClient.accountInformation(account).do();
+  //   setAmount(params.amount);
+  //   console.log(params);
+  //   // const assetId = 95944269;
+  //   let csaToken;
+  //   for (let i = 0; i < params.assets.length; i++) {
+  //     if (params.assets[i]['asset-id'] === 55131493) {
+  //       csaToken = params.assets[i].amount;
+  //       break;
+  //     } else {
+  //       alert('Token is not found!');
+  //     }
+  //   }
+  //   console.log(csaToken);
+  // };
 
   //A function that sends transaction
   const claimAirdrop = async () => {
@@ -172,57 +167,6 @@ const WalletConnectComp = () => {
     }
   };
 
-  const optInToAsset = async () => {
-    let assetID = 95944269;
-    // First update changing transaction parameters
-    // We will account for changing transaction parameters
-    // before every transaction in this example
-    let params = await algodClient.getTransactionParams().do();
-    //comment out the next two lines to use suggested fee
-    params.fee = 1000;
-    params.flatFee = true;
-    let note = new Uint8Array(Buffer.from('example note value'));
-    // const passphrase = KEYS.passphrase;
-    // const myAccount = algosdk.mnemonicToSecretKey(passphrase);
-    let sender = account;
-    let recipient = sender;
-    // We set revocationTarget to undefined as
-    // This is not a clawback operation
-    let revocationTarget = undefined;
-    // CloseRemainderTo is set to undefined as
-    // we are not closing out an as
-    let closeRemainderTo = undefined;
-    // We are sending 0 assets
-    let amount = 0;
-    // signing and sending "txn" allows sender to begin accepting asset specified by creator and index
-    let opttxn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-      sender,
-      recipient,
-      closeRemainderTo,
-      revocationTarget,
-      amount,
-      note,
-      assetID,
-      params
-    );
-
-    const txnsToSign = [
-      {
-        opttxn,
-        message:
-          'This transaction opts you into asset token if you have not already opted in.',
-      },
-    ];
-
-    if (txnsToSign) {
-      console.log('It works!');
-      console.log(txnsToSign);
-    } else {
-      console.log('It did not work!');
-    }
-    return [txnsToSign];
-  };
-
   // A funcxtion that disconnects users
   const disconnect = () => {
     // Make sure the connector exists before trying to kill the session
@@ -230,34 +174,6 @@ const WalletConnectComp = () => {
       connector.killSession();
     }
     resetApp();
-  };
-
-  const singleAssetOptInTxInteraction = async () => {
-    const suggestedParams = await algodClient.getTransactionParams().do();
-    const assetIndex = 10458941;
-
-    const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-      from: KEYS.sender,
-      to: account,
-      amount: 0,
-      assetIndex,
-      note: new Uint8Array(Buffer.from('example note value')),
-      suggestedParams,
-    });
-
-    const txnsToSign = [
-      {
-        txn,
-        message:
-          'This transaction opts you into the USDC asset if you have not already opted in.',
-      },
-    ];
-    if (txnsToSign) {
-      console.log('Working: ', txnsToSign);
-    } else {
-      console.log('OptIn is not working');
-    }
-    return [txnsToSign];
   };
   return (
     // <>
@@ -301,14 +217,14 @@ const WalletConnectComp = () => {
               >
                 Claim airdrop
               </Button>
-              <Button
+              {/* <Button
                 variant='contained'
                 color='info'
                 sx={{ textTransform: 'inherit' }}
                 onClick={singleAssetOptInTxInteraction}
               >
                 Opt In
-              </Button>
+              </Button> */}
             </Box>
           </div>
         ) : (
